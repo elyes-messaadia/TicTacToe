@@ -6,16 +6,9 @@
 from typing import Optional, Union
 from board import Board, available_moves, check_winner
 
-def _try_winning_move(board: Board, sign: str) -> Optional[int]:
-    """
-    If there exists a move that lets 'sign' win immediately, return its index.
-    Otherwise return None.
 
-    Pattern:
-    - Simulate placing 'sign' in each free cell
-    - If it makes a 3-in-a-row, that's the winning move
-    - Revert after testing
-    """
+def _try_winning_move(board: Board, sign: str) -> Optional[int]:
+    """Teste chaque coup libre et retourne l'index qui donne la victoire si trouvé."""
     for i in available_moves(board):
         board[i] = sign
         if check_winner(board) == sign:
@@ -25,64 +18,44 @@ def _try_winning_move(board: Board, sign: str) -> Optional[int]:
     return None
 
 
-def ia(board: Board, signe: str) -> Union[int, bool]:
-    """
-    Decision-making AI for Tic Tac Toe.
-
-    Parameters
-    ----------
-    board : list of length 9 with values in {'X','O',None}
-    signe : 'X' or 'O' (the AI's symbol)
-
-    Returns
-    -------
-    int  : the chosen index (0..8)
-    bool : False on invalid inputs or if no legal moves exist
-
-    Strategy (explainable and deterministic):
-    1) Win now if possible.
-    2) Otherwise block opponent's immediate win.
-    3) Take center if free.
-    4) Take a corner (0,2,6,8) if free.
-    5) Take a side (1,3,5,7).
-    """
-    # --- Validate inputs ---
-    if signe not in ('X', 'O'):
+def ia(board: Board, sign: str) -> Union[int, bool]:
+    """IA déterministe simple : gagne si possible, bloque, puis centre/corner/side."""
+    # validation minimale
+    if sign not in ("X", "O"):
         return False
     if not isinstance(board, list) or len(board) != 9:
         return False
-    for cell in board:
-        if cell not in (None, 'X', 'O'):
-            return False
+    if any(cell not in (None, "X", "O") for cell in board):
+        return False
 
-    opponent = 'O' if signe == 'X' else 'X'
     moves = available_moves(board)
     if not moves:
         return False
 
-    # 1) Try to win immediately
-    win_idx = _try_winning_move(board, signe)
-    if win_idx is not None:
-        return win_idx
+    opponent = "O" if sign == "X" else "X"
 
-    # 2) Block opponent's immediate win
-    block_idx = _try_winning_move(board, opponent)
-    if block_idx is not None:
-        return block_idx
+    # 1) gagner tout de suite
+    win = _try_winning_move(board, sign)
+    if win is not None:
+        return win
 
-    # 3) Take center
+    # 2) bloquer l'adversaire
+    block = _try_winning_move(board, opponent)
+    if block is not None:
+        return block
+
+    # 3) centre
     if 4 in moves:
         return 4
 
-    # 4) Take a corner
-    for corner in (0, 2, 6, 8):
-        if corner in moves:
-            return corner
+    # 4) coin
+    for idx in (0, 2, 6, 8):
+        if idx in moves:
+            return idx
 
-    # 5) Take a side
-    for side in (1, 3, 5, 7):
-        if side in moves:
-            return side
+    # 5) côté
+    for idx in (1, 3, 5, 7):
+        if idx in moves:
+            return idx
 
-    # Fallback: should not happen given checks
     return moves[0]

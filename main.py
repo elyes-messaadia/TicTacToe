@@ -9,72 +9,59 @@ from board import Board, print_board, check_winner, is_draw, make_move, availabl
 from ai import ia
 
 
-def _human_turn(board: Board, sign: str) -> None:
-    """
-    Ask the human for a move (1..9), validate, and apply.
-    Keep prompting until the move is legal.
-    """
+def get_human_move(board: Board, sign: str) -> int:
+    """Demande au joueur humain un index valide (0..8) et le retourne."""
     while True:
-        try:
-            raw = input(f"Player {sign}, choose a cell (1-9): ").strip()
-            idx = int(raw) - 1
-            if make_move(board, idx, sign):
-                return
-            print("Illegal move, try again.")
-        except ValueError:
-            print("Please enter a number between 1 and 9.")
-
-
-def _ai_turn(board: Board, sign: str) -> None:
-    """
-    Query the AI for a move via ia(board, sign) and play it.
-    If ia() returns False unexpectedly, pick the first available move.
-    """
-    choice = ia(board, sign)
-    if choice is False:
-        moves = available_moves(board)
-        if not moves:
-            return
-        choice = moves[0]
-    make_move(board, int(choice), sign)
-    print(f"AI ({sign}) plays at position {choice + 1}.")
+        raw = input(f"Joueur {sign}, choisissez une case (1-9) : ").strip()
+        if not raw.isdigit():
+            print("Entrez un nombre entre 1 et 9.")
+            continue
+        idx = int(raw) - 1
+        if make_move(board, idx, sign):
+            return idx
+        print("Coup invalide, réessayez.")
 
 
 def play_game(vs_ai: bool = True) -> None:
-    """
-    Main loop:
-    - Start with empty board
-    - X begins by convention
-    - If vs_ai=True, O is the AI
-    - After each move: print, check winner/draw, then switch
+    """Boucle principale du jeu (humain vs humain ou humain vs IA).
+
+    - X commence
+    - si vs_ai=True alors O est l'IA
     """
     board: Board = [None] * 9
-    current = 'X'
-    print("Welcome to Tic Tac Toe!")
-    print("Numbers (1..9) show free cells.\n")
+    current = "X"
+    print("Bienvenue au Tic Tac Toe !")
+    print("Les chiffres (1..9) indiquent les cases libres.\n")
 
     while True:
         print_board(board)
 
-        if vs_ai and current == 'O':
-            _ai_turn(board, current)
+        if vs_ai and current == "O":
+            choice = ia(board, current)
+            if choice is False:
+                moves = available_moves(board)
+                if not moves:
+                    print("Aucun coup possible.")
+                    return
+                choice = moves[0]
+            make_move(board, int(choice), current)
+            print(f"IA ({current}) joue en position {choice + 1}.")
         else:
-            _human_turn(board, current)
+            get_human_move(board, current)
 
         winner = check_winner(board)
         if winner is not None:
             print_board(board)
-            print(f"Player {winner} wins! 🎉")
+            print(f"Le joueur {winner} a gagné ! 🎉")
             return
 
         if is_draw(board):
             print_board(board)
-            print("It's a draw! 🤝")
+            print("Match nul ! 🤝")
             return
 
-        current = 'O' if current == 'X' else 'X'
+        current = "O" if current == "X" else "X"
 
 
 if __name__ == "__main__":
-    # Toggle to play human vs human: play_game(vs_ai=False)
     play_game(vs_ai=True)

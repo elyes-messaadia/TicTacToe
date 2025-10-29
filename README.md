@@ -1,4 +1,21 @@
-﻿# Tic Tac Toe — Python (Console + IA)
+﻿# TicTacToe
+
+Petit jeu Tic Tac Toe en console.
+
+Fichiers importants :
+
+- `main.py` : boucle de jeu et interactions utilisateur.
+- `board.py` : logique du plateau et règles.
+- `ai.py` : IA simple et déterministe.
+
+Pour jouer :
+
+```powershell
+python main.py
+```
+
+Voir les fichiers `README_*.md` pour des explications détaillées par module.
+# Tic Tac Toe — Python (Console + IA)
 
 Version console du classique **Tic Tac Toe** avec une **Intelligence Artificielle** simple et explicable.  
 Les **commentaires dans le code sont en anglais** pour t’aider à présenter précisément le rôle de chaque fonction.
