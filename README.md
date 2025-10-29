@@ -15,6 +15,7 @@ python main.py
 ```
 
 Voir les fichiers `README_*.md` pour des explications détaillées par module.
+
 # Tic Tac Toe — Python (Console + IA)
 
 Version console du classique **Tic Tac Toe** avec une **Intelligence Artificielle** simple et explicable.  
@@ -38,10 +39,10 @@ tictactoe/
 ├─ ai.py # Fonction ia(board, signe) + helper interne
 └─ main.py # Boucle de jeu console (humain/IA), entrées clavier, exécutable principal
 
-
 ### Détails par fichier
 
 **`board.py` — Règles & plateau**
+
 - Représentation : liste de 9 cases (`['X', 'O', None]`), indices 0..8.
 - `WIN_LINES` : toutes les combinaisons gagnantes.
 - Fonctions :  
@@ -52,6 +53,7 @@ tictactoe/
   - `make_move(board, index, sign) -> bool` — applique un coup si légal.
 
 **`ai.py` — Intelligence Artificielle**
+
 - Signature exigée : `ia(board, signe) -> int | False`.
 - Validations d’entrée (types/valeurs).
 - Stratégie déterministe, facile à expliquer :  
@@ -63,6 +65,7 @@ tictactoe/
 - Retourne un **indice 0..8** ou **`False`** (erreur / aucun coup).
 
 **`main.py` — Boucle de jeu (console)**
+
 - Point d’entrée.  
 - Par défaut : **X = humain**, **O = IA**.  
 - `play_game(vs_ai=True)` ; passer `False` pour **humain vs humain**.  
@@ -74,5 +77,6 @@ tictactoe/
 
 1. Ouvre un terminal dans le dossier `tictactoe/`.  
 2. Exécute :
+
 ```bash
 python main.py
