@@ -1,82 +1,34 @@
 ﻿# TicTacToe
 
-Petit jeu Tic Tac Toe en console.
+Petit jeu Tic-tac-toe en console (Python).
 
-Fichiers importants :
+Ce dépôt contient une implémentation simple du jeu avec :
 
-- `main.py` : boucle de jeu et interactions utilisateur.
-- `board.py` : logique du plateau et règles.
-- `ai.py` : IA simple et déterministe.
+- `main.py` : boucle de jeu et interactions utilisateur (console).
+- `board.py` : représentation du plateau et règles du jeu.
+- `ai.py` : intelligence artificielle (minimax) pour jouer contre l'ordinateur.
 
-Pour jouer :
+## Lancer le jeu
+
+Ouvrir un terminal dans le dossier du projet et exécuter :
 
 ```powershell
 python main.py
 ```
 
-Voir les fichiers `README_*.md` pour des explications détaillées par module.
+Le jeu démarre en mode humain vs IA (X = humain, O = IA). Pour jouer humain vs humain, ouvrez `main.py` et appelez `play_game(vs_ai=False)`.
 
-# Tic Tac Toe — Python (Console + IA)
+## Fichiers principaux
 
-Version console du classique **Tic Tac Toe** avec une **Intelligence Artificielle** simple et explicable.  
-Les **commentaires dans le code sont en anglais** pour t’aider à présenter précisément le rôle de chaque fonction.
+- `board.py` : fonctions pour créer et afficher un plateau, tester gagnant/nul, appliquer un coup.
+- `ai.py` : IA utilisant minimax pour choisir un coup optimal.
+- `main.py` : boucle de jeu, lecture des entrées et affichage.
 
----
+## Prochaines étapes possibles
 
-## 🎯 Objectifs
+- Ajouter des tests unitaires pour `board.py` et `ai.py`.
+- Ajouter un mode de difficulté (randomiser les coups de l'IA pour un niveau facile).
+- Ajouter une interface graphique légère (Tkinter/PySimpleGUI).
 
-- Implémenter les **règles du jeu** (gagnant, nul, coups légaux).  
-- Coder une **IA** conforme à la signature imposée : `def ia(board, signe) -> int | False`.  
-- Structurer le code en **trois fichiers** clairs et réutilisables.  
-- (Optionnel) Préparer une **interface graphique** (Tkinter) sans toucher à la logique.
+Voir les fichiers `README_board.md`, `README_ai.md` et `README_main.md` pour des détails par module.
 
----
-
-## 🗂️ Structure du dépôt
-
-tictactoe/
-├─ board.py # Plateau + règles (gagnant, nul, coups dispo, appliquer un coup, affichage)
-├─ ai.py # Fonction ia(board, signe) + helper interne
-└─ main.py # Boucle de jeu console (humain/IA), entrées clavier, exécutable principal
-
-### Détails par fichier
-
-**`board.py` — Règles & plateau**
-
-- Représentation : liste de 9 cases (`['X', 'O', None]`), indices 0..8.
-- `WIN_LINES` : toutes les combinaisons gagnantes.
-- Fonctions :  
-  - `print_board(board)` — affiche une grille lisible (1..9 pour viser les cases vides).  
-  - `check_winner(board) -> Optional[str]` — renvoie `'X'`, `'O'` ou `None`.  
-  - `is_draw(board) -> bool` — plateau plein sans gagnant.  
-  - `available_moves(board) -> List[int]` — indices libres.  
-  - `make_move(board, index, sign) -> bool` — applique un coup si légal.
-
-**`ai.py` — Intelligence Artificielle**
-
-- Signature exigée : `ia(board, signe) -> int | False`.
-- Validations d’entrée (types/valeurs).
-- Stratégie déterministe, facile à expliquer :  
-  1) Gagner tout de suite.  
-  2) Bloquer une victoire adverse immédiate.  
-  3) Prendre le **centre** (4).  
-  4) Prendre un **coin** (0,2,6,8).  
-  5) Prendre un **côté** (1,3,5,7).  
-- Retourne un **indice 0..8** ou **`False`** (erreur / aucun coup).
-
-**`main.py` — Boucle de jeu (console)**
-
-- Point d’entrée.  
-- Par défaut : **X = humain**, **O = IA**.  
-- `play_game(vs_ai=True)` ; passer `False` pour **humain vs humain**.  
-- Alterne les tours → affiche → vérifie gagnant/nul → termine proprement.
-
----
-
-## ▶️ Lancer le projet
-
-1. Ouvre un terminal dans le dossier `tictactoe/`.  
-2. Exécute :
-
-```bash
-python main.py

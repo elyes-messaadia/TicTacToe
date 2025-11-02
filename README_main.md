@@ -1,26 +1,21 @@
-README pour `main.py`
+# main.py — Boucle de jeu (console)
 
-But: TicTacToe - boucle de jeu
+Ce fichier contient la boucle principale pour jouer en console.
 
-But: Contenu
+Fonctions principales :
 
-- `get_human_move(board, sign)` : demande et applique un coup humain valide (1..9). Retourne l'index joué.
-- `play_game(vs_ai=True)` : boucle principale. Si `vs_ai` est True, l'IA joue les 'O'. Le jeu alterne X/O, affiche le plateau, détecte victoire/nul et affiche le résultat.
+- `get_human_move(board, sign)` : lit la saisie de l'utilisateur (1..9), valide et applique le coup (retourne l'indice 0..8).
+- `play_game(vs_ai=True)` : lance une partie complète ; si `vs_ai=True`, l'IA joue les 'O'.
 
-Entrées / sorties
+Entrées / sorties :
 
-- Entrées : saisies clavier du joueur (1..9) lors du tour humain.
-- Sorties : affichage console du plateau et messages de fin.
+- Entrées : saisies clavier du joueur (1..9).
+- Sorties : affichage du plateau et messages de progression/fin.
 
-Exemple d'utilisation
-
-Lancer le jeu :
+Exemple d'utilisation :
 
 ```powershell
 python main.py
 ```
 
-Conseils
-
-- Pour jouer humain vs humain, appeler `play_game(vs_ai=False)`.
-- Les messages sont en français pour faciliter la prise en main.
+Astuce : pour jouer humain vs humain, appeler `play_game(vs_ai=False)`.
